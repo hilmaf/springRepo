@@ -26,4 +26,17 @@ public class BoardController {
 		return "board/list";
 	}
 	
+	// 게시글 작성
+	@GetMapping("/board/write")
+	public String write() {
+	
+		return "board/write";
+	}
+	
+	// 게시글 작성 
+	@PostMapping("/board/write")
+	public String write(BoardVo vo) {
+		// service
+		int result = service.write(vo);
+	}
 }
