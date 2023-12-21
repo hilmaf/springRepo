@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.kh.app.board.service.BoardService;
 import com.kh.app.board.vo.BoardVo;
@@ -35,8 +36,10 @@ public class BoardController {
 	
 	// 게시글 작성 
 	@PostMapping("/board/write")
-	public String write(BoardVo vo) {
+	public void write(BoardVo vo) {
 		// service
 		int result = service.write(vo);
+		
+		System.out.println(result);
 	}
 }

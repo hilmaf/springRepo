@@ -25,4 +25,8 @@ public class BoardService {
 		return dao.getBoardList(sst);
 	}
 
+	public int write(BoardVo vo) {
+		return dao.write(sst, vo);
+	}
+
 }

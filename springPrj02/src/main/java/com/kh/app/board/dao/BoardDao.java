@@ -15,4 +15,8 @@ public class BoardDao {
 		return sst.selectList("BoardMapper.getBoardList");
 	}
 
+	public int write(SqlSessionTemplate sst, BoardVo vo) {
+		return sst.insert("BoardMapper.write", vo);
+	}
+
 }
