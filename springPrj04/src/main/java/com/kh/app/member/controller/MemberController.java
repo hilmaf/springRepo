@@ -1,6 +1,11 @@
 package com.kh.app.member.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,17 +38,32 @@ public class MemberController {
 	
 	// 로그인
 	@PostMapping("login")
-	public String login(MemberVo vo) {
+	public String login(MemberVo vo, HttpSession session) throws Exception {
 		// service
+		MemberVo loginMember = service.login(vo);
+		// result == view
+		if(loginMember==null) {
+			throw new Exception("일치하는 회원정보 없음");
+		}
 		
-		return "";
+		session.setAttribute("loginMember", loginMember);
+		session.setAttribute("alertMsg", "로그인 성공");
+		
+		System.out.println(loginMember);
+		
+		return "redirect:/home";
 	}
 	
 	// 회원 정보 수정(비밀번호, 닉네임)
 	@PostMapping("edit")
-	public String edit(MemberVo vo) {
+	public String edit(MemberVo vo) throws Exception {
+		int result = service.edit(vo);
 		
-		return "";
+		if(result != 1) {
+			throw new Exception();
+		}
+		
+		return "redirect:/home";
 	}
 	
 	// 회원 탈퇴
@@ -54,8 +74,12 @@ public class MemberController {
 	
 	// 전체 회원 목록 조회(관리자 전용)
 	@GetMapping("list")
-	public String list() {
-		return "";
+	public String list(Model model) {
+		List<MemberVo> voList = service.list();
+		
+		model.addAttribute("memberVoList", voList);
+		
+		return "member/list";
 	}
 
 	
